@@ -26,6 +26,7 @@ namespace ConjHacks
             Status.Text = "Ready for load...";
         }
 
+        // Answer table parser
         private void ParseTable()
         {
             Status.Text = "Parsing table.";
@@ -53,6 +54,7 @@ namespace ConjHacks
             RunButton.IsEnabled = true;
         }
 
+        // Startup and loop
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             Thread.Sleep(1000);
@@ -60,10 +62,13 @@ namespace ConjHacks
             running = true;
             while(running)
             {
+                // Script to find current question
                 string currentWords = await WebViewConj.ExecuteScriptAsync("document.getElementById(\"question-input\").innerHTML;");
                 currentWords = currentWords.Replace("\"", "");
+                // Try linking to keypair
                 try { spanishInput = ansDictionary[currentWords]; } catch (Exception ex) { Debug.WriteLine(ex); }
                 Thread.Sleep(200);
+                // Execute input script
                 string script = $"document.getElementById('assignment-answer-input').value = '{spanishInput}'; var enterEvent = new KeyboardEvent(\"keydown\", {{ keyCode: 13 }});\r\ntextbox.dispatchEvent(enterEvent);";
                 await WebViewConj.CoreWebView2.ExecuteScriptAsync(script);   
             }
@@ -71,12 +76,14 @@ namespace ConjHacks
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // Get table and parse
             html = InputBox.Text;
             ParseTable();
         }
 
         private void StopButton_Click(object sender, RoutedEventArgs e)
         {
+            // Stops loop
             Status.Text = "Stopped.";
             running = false;
         }
