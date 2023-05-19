@@ -14,6 +14,7 @@ namespace ConjHacks
         private string html;
         private string script;
         private string spanishInput;
+        private string currentWords;
 
         private bool running = false;
 
@@ -63,14 +64,13 @@ namespace ConjHacks
             while(running)
             {
                 // Script to find current question
-                string currentWords = await WebViewConj.ExecuteScriptAsync("document.getElementById(\"question-input\").innerHTML;");
+                currentWords = await WebViewConj.ExecuteScriptAsync("document.getElementById(\"question-input\").innerHTML;");
                 currentWords = currentWords.Replace("\"", "");
                 // Try linking to keypair
                 try { spanishInput = ansDictionary[currentWords]; } catch (Exception ex) { Debug.WriteLine(ex); }
                 Thread.Sleep(200);
                 // Execute input script
-                string script = $"document.getElementById('assignment-answer-input').value = '{spanishInput}'; var enterEvent = new KeyboardEvent(\"keydown\", {{ keyCode: 13 }});\r\ntextbox.dispatchEvent(enterEvent);";
-                await WebViewConj.CoreWebView2.ExecuteScriptAsync(script);   
+                await WebViewConj.CoreWebView2.ExecuteScriptAsync($"document.getElementById('assignment-answer-input').value = '{spanishInput}'; var enterEvent = new KeyboardEvent(\"keydown\", {{ keyCode: 13 }});\r\ntextbox.dispatchEvent(enterEvent);");   
             }
         }
 
