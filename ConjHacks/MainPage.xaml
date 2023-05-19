@@ -1,0 +1,23 @@
+﻿<Page
+    x:Class="ConjHacks.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ConjHacks"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+
+    <Grid>
+        <StackPanel>
+            <TextBox Header="Input table HTML here..." TextChanged="TextBox_TextChanged" x:Name="InputBox"/>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="RunButton" Click="Button_Click">Start</Button>
+                <Button x:Name="StopButton" Click="StopButton_Click">Stop</Button>
+                <TextBlock x:Name="Status" Margin="10,5,0,0"/>
+            </StackPanel>
+            <controls:WebView2 x:Name="WebViewConj" Source="https://conjuguemos.com/" HorizontalAlignment="Stretch" Height="600"/>
+        </StackPanel>
+    </Grid>
+</Page>
