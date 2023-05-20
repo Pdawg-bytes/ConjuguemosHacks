@@ -12,7 +12,6 @@ namespace ConjHacks
     public sealed partial class MainPage : Page
     {
         private string html;
-        private string script;
         private string spanishInput;
         private string currentWords;
 
